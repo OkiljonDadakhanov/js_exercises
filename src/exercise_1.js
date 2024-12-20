@@ -1,5 +1,5 @@
 /**
- * Write a function to check if a string is empty 
+ * Write a function to check if a string is empty
  * @param {String} text
  * @returns {Boolean}
  * @example
@@ -9,26 +9,35 @@
  * isStringEmpty(); => throws error "text must be defined"
  */
 function isStringEmpty(text) {
-  // Your code here
+  if (text == undefined) {
+    throw new Error("text must be defined");
+  }
+  return text.trim().length === 0;
 }
 
 /**
  * Write a function to truncate text
- * @param {String} text 
+ * @param {String} text
  * @param {Number} numberOfCharacters
- * @returns {String} 
+ * @returns {String}
  * @example
  * truncateString('Hello World', 2); => 'He'
  * truncateString('Hello world'); => throws error "Please specify number of characters to extract"
  * truncateString(''); => throws error "text must have at least one character"
  */
 function truncateString(text, numberOfCharacters) {
-  // Your code here
+  if (text === undefined || text.length === 0) {
+    throw new Error("text must have at least one character");
+  }
+  if (numberOfCharacters === undefined) {
+    throw new Error("Please specify number of characters to extract");
+  }
+  return text.substring(0, numberOfCharacters);
 }
 
 /**
  * Write a function to create social media post hash tag
- * @param {String} text 
+ * @param {String} text
  * @returns {String}
  * @example
  * createHashTag('Hello World'); => '#helloWorld'
@@ -38,12 +47,25 @@ function truncateString(text, numberOfCharacters) {
  * createHashTag('   '); => throws error "Text should have at least three characters"
  */
 function createHashTag(text) {
-  // Your code here
+  if (text === undefined || text.trim().length < 3) {
+    throw new Error("Text should have at least three characters");
+  }
+  return (
+    "#" +
+    text
+      .trim()
+      .toLowerCase()
+      .split(" ")
+      .map((word, index) =>
+        index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join("")
+  );
 }
 
 /**
  * Write a function to format phone number as '+998 99 777 66 55'
- * @param {Number} phoneNumber 
+ * @param {Number} phoneNumber
  * @returns {String}
  * @throws {Error} 'Phone number must be either 9 or 12 characters long'
  * @example
@@ -59,14 +81,14 @@ function formatPhoneNumber(phoneNumber) {
 
 /**
  * Write a function that transforms text to different cases
- * @param {String} text 
+ * @param {String} text
  * @param {'camel'|'kebab'|'snake'} caseName - 'camel', 'kebab', 'snake'
  * @returns {String}
  * @example
  * changeTextCase('Hello World', 'camel'); => 'helloWorld'
  * changeTextCase('Hello World', 'kebab'); => 'hello-world'
  * changeTextCase('Hello World', 'snake'); => 'hello_world'
- * 
+ *
  */
 function changeTextCase(text, caseName) {
   // Your code here
@@ -91,7 +113,7 @@ function replaceWordInText(text, word, replacement) {
 
 /**
  * Write a function to extract price in number format from the text
- * @param {String} text 
+ * @param {String} text
  * @returns {Number}
  * @example
  * extractPriceFromText('Apple price in market is $2.32 per kg now'); => 2.32
@@ -109,5 +131,5 @@ module.exports = {
   isStringEmpty,
   replaceWordInText,
   truncateString,
-  formatPhoneNumber
-}
+  formatPhoneNumber,
+};
