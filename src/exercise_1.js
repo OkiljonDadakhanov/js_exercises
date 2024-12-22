@@ -76,7 +76,27 @@ function createHashTag(text) {
  * formatPhoneNumber(); => throws error "Phone number must be either 9 or 12 characters long"
  */
 function formatPhoneNumber(phoneNumber) {
-  // Your code here
+  if (phoneNumber === undefined || isNaN(phoneNumber)) {
+    throw new Error("Phone number must be either 9 or 12 characters long");
+  }
+
+  const phoneStr = phoneNumber.toString();
+
+  if (phoneStr.length !== 9 && phoneStr.length !== 12) {
+    throw new Error("Phone number must be either 9 or 12 characters long");
+  }
+
+  if (phoneStr.length === 9) {
+    return `+998 ${phoneStr.slice(0, 2)} ${phoneStr.slice(
+      2,
+      5
+    )} ${phoneStr.slice(5, 7)} ${phoneStr.slice(7, 9)}`;
+  } else if (phoneStr.length === 12) {
+    return `+998 ${phoneStr.slice(1, 3)} } ${phoneStr.slice(
+      6,
+      8
+    )} ${phoneStr.slice(8, 10)} ${phoneStr.slice(10, 12)}`;
+  }
 }
 
 /**
@@ -91,7 +111,25 @@ function formatPhoneNumber(phoneNumber) {
  *
  */
 function changeTextCase(text, caseName) {
-  // Your code here
+  const words = text.split(" ");
+
+  switch (caseName) {
+    case "camel":
+      return words
+        .map((word, index) => {
+          if (index === 0) {
+            return word.toLowerCase();
+          }
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join("");
+    case "kebab":
+      return words.join("-").toLowerCase();
+    case "snake":
+      return words.join("_").toLowerCase();
+    default:
+      throw new Error('Invalid caseName. Use "camel", "kebab", or "snake".');
+  }
 }
 
 /**
@@ -108,7 +146,9 @@ function changeTextCase(text, caseName) {
  * 'Winnie-the-Puff (also known as Edward Bear, Puff Bear or simply Puff) is a fictional anthropomorphic teddy bear created by English author A. A. Milne and English illustrator E. H. Shepard. Winnie-the-Puff first appeared by name in a children's story commissioned by London's Evening News for Christmas Eve 1925. The character is inspired by a stuffed toy that Milne had bought for his son Christopher Robin in Harrods department store, and a bear they had viewed at London Zoo.'
  */
 function replaceWordInText(text, word, replacement) {
-  // Your code here
+  const regex = new RegExp(`\\b${word}\\b`, "gi");
+
+  return text.replace(regex, replacement);
 }
 
 /**
@@ -121,7 +161,15 @@ function replaceWordInText(text, word, replacement) {
  * extractPriceFromText('There were no apples left in the shop'); => 'No matching price was found'
  */
 function extractPriceFromText(text) {
-  // Your code here
+  const regex = /\$+(\.\d+)?)/;
+
+  const match = text.match(regex);
+
+  if (match) {
+    return parseFloat(match[1].replace(",", ""));
+  } else {
+    return "No matching price was found";
+  }
 }
 
 module.exports = {
