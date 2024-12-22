@@ -92,10 +92,13 @@ function formatPhoneNumber(phoneNumber) {
       5
     )} ${phoneStr.slice(5, 7)} ${phoneStr.slice(7, 9)}`;
   } else if (phoneStr.length === 12) {
-    return `+998 ${phoneStr.slice(1, 3)} } ${phoneStr.slice(
-      6,
-      8
-    )} ${phoneStr.slice(8, 10)} ${phoneStr.slice(10, 12)}`;
+    return `+998 ${phoneStr.slice(1, 3)} ${phoneStr.slice(
+      3,
+      6
+    )} ${phoneStr.slice(6, 8)} ${phoneStr.slice(8, 10)} ${phoneStr.slice(
+      10,
+      12
+    )}`;
   }
 }
 
@@ -161,7 +164,7 @@ function replaceWordInText(text, word, replacement) {
  * extractPriceFromText('There were no apples left in the shop'); => 'No matching price was found'
  */
 function extractPriceFromText(text) {
-  const regex = /\$+(\.\d+)?)/;
+  const regex = /\$([\d,]+(\.\d+)?)/;
 
   const match = text.match(regex);
 
